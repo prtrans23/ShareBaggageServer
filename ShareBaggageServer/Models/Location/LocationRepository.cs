@@ -28,8 +28,8 @@ select
     sp.TimeStamp,
     sp.RoomID,
     us.usersName,
-    ABS(sp.locationX - 3.12) as distunceX, 
-    ABS(sp.locationY - 3.11) as distunceY 
+    ABS(sp.locationX - {locX}) as distunceX, 
+    ABS(sp.locationY - {locY}) as distunceY 
 from 
 	seller_places as sp
 		left join
