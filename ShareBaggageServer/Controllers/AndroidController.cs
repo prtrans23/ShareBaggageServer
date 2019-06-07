@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ShareBaggageServer.Models.AndLogin;
+using ShareBaggageServer.Models.Location;
 
 namespace ShareBaggageServer.Controllers
 {
@@ -29,6 +30,12 @@ namespace ShareBaggageServer.Controllers
                 return Newtonsoft.Json.JsonConvert.SerializeObject(obj);
             }
 
+        }
+
+        public string GetLocationData(decimal x = 0, decimal y = 0)
+        {
+            var _repository = new LocationRepository();
+            return _repository.GetLocation(x, y);
         }
 
     }
