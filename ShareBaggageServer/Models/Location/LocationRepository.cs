@@ -27,7 +27,7 @@ select
     sp.PlaceNumber,
     sp.TimeStamp,
     sp.RoomID,
-    us.usersName,
+    us.usersName as UsersName,
     ABS(sp.locationX - {locX}) as distunceX, 
     ABS(sp.locationY - {locY}) as distunceY 
 from 

@@ -19,6 +19,7 @@ namespace ShareBaggageServer.Models.Location
         public int PlaceNumber { get; set; }
         public DateTime TimeStamp { get; set; }
         public int RoomID { get; set; }
+        public string UsersName { get; set; }
         public decimal distunceX { get; set; }
         public decimal distunceY { get; set; }
 
