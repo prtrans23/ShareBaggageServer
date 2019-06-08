@@ -38,5 +38,24 @@ namespace ShareBaggageServer.Controllers
             return _repository.GetLocation(x, y);
         }
 
+        public string CustomerApply(int placeNumber, string customerID, int x, int y, int z, DateTime startDate, DateTime endDate)
+        {
+            var _repository = new LocationRepository();
+
+            try
+            {
+                _repository.UpdateRoomDisable(placeNumber);
+
+                _repository.MakeReservation(placeNumber, customerID, x, y, z, startDate, endDate);
+            }
+            catch(Exception e)
+            {
+                return e.Message;
+            }
+
+            return "OK";
+        }
+
+
     }
 }
