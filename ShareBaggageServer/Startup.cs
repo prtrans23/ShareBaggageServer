@@ -49,6 +49,10 @@ namespace ShareBaggageServer
                 app.UseHsts();
             }
 
+            // File Server
+            app.UseFileServer();
+
+            // Default
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();

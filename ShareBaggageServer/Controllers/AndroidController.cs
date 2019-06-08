@@ -57,5 +57,12 @@ namespace ShareBaggageServer.Controllers
         }
 
 
+        public IActionResult DaumApi()
+        {
+            Response.ContentType = "text/html";
+
+            return View();
+        }
+
     }
 }
