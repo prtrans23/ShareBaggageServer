@@ -91,7 +91,7 @@ select
 from 
 	seller_places
 where
-    RoomID = @placeNumber
+    RoomID = @RoomID
 ";
 
             // 2. Get Mysql Object 
@@ -99,7 +99,7 @@ where
 
 
             // 3. Get By Dapper
-            var data = connection.QueryFirstOrDefault<string>(query, new { RoomID = placeNumber});
+            var data = connection.Query<string>(query, new { RoomID = placeNumber}).FirstOrDefault();
 
             return data;
         }
