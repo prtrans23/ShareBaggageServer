@@ -81,5 +81,22 @@ namespace ShareBaggageServer.Controllers
 
         }
 
+        public string GetSellerGoodsList(string sellerId)
+        {
+
+            var _repository = new LocationRepository();
+
+            try
+            {
+                return _repository.GetSellerList(sellerId);
+            }
+            catch (Exception e)
+            {
+                return e.Message;
+            }
+
+        }
+
+
     }
 }

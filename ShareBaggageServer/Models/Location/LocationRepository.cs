@@ -116,7 +116,8 @@ where
 
             var query = @"
 INSERT INTO `customer_reservation`
-(`ReservationID`,
+(
+`ReservationID`,
 `RoomID`,
 `SellerID`,
 `CustomerID`,
@@ -129,8 +130,8 @@ INSERT INTO `customer_reservation`
 VALUES
 (
 NULL,
-@SellerID,
 @RoomID,
+@SellerID,
 @CustomerID,
 @sizeX,
 @sizeY,
@@ -195,7 +196,52 @@ WHERE
         }
 
 
+        public string GetSellerList(string sellerID)
+        {
+            string query = @"
+SELECT 
+	cr.CustomerID,
+    ur.usersName,
+    cr.StartDate,
+    cr.EndDate,
+    (
+    CASE 
+        WHEN cr.sizeX + cr.sizeY + cr.sizeZ <= 178 THEN '소형'
+        WHEN cr.sizeX + cr.sizeY + cr.sizeZ > 178 && cr.sizeX + cr.sizeY + cr.sizeZ <= 330 THEN '중형'
+		WHEN cr.sizeX + cr.sizeY + cr.sizeZ > 331 && cr.sizeX + cr.sizeY + cr.sizeZ <= 419 THEN '대형'
+		WHEN cr.sizeX + cr.sizeY + cr.sizeZ > 419 THEN '특대형'
+        ELSE 'Fail'
+    END) AS GoodsSize,
+    
+    (
+    CASE 
+        WHEN cr.sizeX + cr.sizeY + cr.sizeZ <= 178 THEN 10000
+        WHEN cr.sizeX + cr.sizeY + cr.sizeZ > 178 && cr.sizeX + cr.sizeY + cr.sizeZ <= 330 THEN  15000
+		WHEN cr.sizeX + cr.sizeY + cr.sizeZ > 331 && cr.sizeX + cr.sizeY + cr.sizeZ <= 419 THEN  80000
+		WHEN cr.sizeX + cr.sizeY + cr.sizeZ > 419 THEN 150000
+        ELSE 0
+    END) AS Money
+    
+FROM 
+	customer_reservation as cr
+    left join
+    users as ur
+    on
+    cr.CustomerID = ur.usersId
+WHERE
+	cr.SellerID = @SellerID
+";
 
+            // 2. Get Mysql Object 
+            var connection = MySqlRepository.GetConnetion();
+
+
+            // 3. Get By Dapper
+            var data = connection.Query<SellerLIst>(query, new { SellerID = sellerID }).ToList();
+
+            return Newtonsoft.Json.JsonConvert.SerializeObject(data);
+
+        }
 
 
 
