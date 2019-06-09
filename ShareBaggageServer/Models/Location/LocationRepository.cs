@@ -70,7 +70,7 @@ UPDATE
 SET
 	IsUseLocation = 0
 WHERE 
-	PlaceNumber = {PlaceNumber} ;
+	RoomID = {PlaceNumber} ;
 ";
             query = query.Replace("{PlaceNumber}", placeNumber.ToString());
 
