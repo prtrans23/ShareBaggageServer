@@ -21,6 +21,7 @@ select
     sp.LocationX,
     sp.LocationY,
     sp.Description,
+    sp.SellerAddress,
     sp.IsUseLocation,
     sp.RoomSizeX,
     sp.RoomSizeY,
@@ -99,7 +100,7 @@ where
 
 
             // 3. Get By Dapper
-            var data = connection.Query<string>(query, new { RoomID = placeNumber}).FirstOrDefault();
+            var data = connection.Query<string>(query, new { RoomID = placeNumber }).FirstOrDefault();
 
             return data;
         }
@@ -110,7 +111,7 @@ where
 
             // before Get
             string sellerID = GetSellerByPlacenumber(placeNumber);
-            
+
             //
 
             var query = @"
@@ -160,5 +161,45 @@ NULL,
             // 3. Get By Dapper
             connection.Execute(query, obj);
         }
+
+
+
+        public string GetCustomerList(string userId)
+        {
+
+            // 1. Get Query
+            string query = @"
+SELECT 
+	ur.usersName as SellerName,
+    cr.SellerID,
+    cr.StartDate,
+    cr.EndDate
+FROM 
+	customer_reservation as cr
+    left join
+    users as ur
+    on cr.SellerID = ur.usersId
+WHERE
+	cr.CustomerID = @CustomerID
+
+";
+
+            // 2. Get Mysql Object 
+            var connection = MySqlRepository.GetConnetion();
+
+
+            // 3. Get By Dapper
+            var data = connection.Query<CustomerMypage>(query, new { CustomerID = userId }).ToList();
+
+            return Newtonsoft.Json.JsonConvert.SerializeObject(data);
+        }
+
+
+
+
+
+
     }
+
+
 }
